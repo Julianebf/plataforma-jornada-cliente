@@ -61,7 +61,8 @@ export default function DashboardPage() {
 
   }, []);
 
-  async function exportarPDF() {
+  
+ async function exportarPDF() {
 
   if (!dashboardRef.current) return;
 
@@ -76,34 +77,60 @@ export default function DashboardPage() {
       }
     );
 
-const pdf = new jsPDF({
-  orientation: "landscape",
-  unit: "px",
-  format: [1400, 2000],
-});
+    const pdf = new jsPDF({
+      orientation: "landscape",
+      unit: "px",
+      format: "a4",
+    });
 
-const imgProps =
-  pdf.getImageProperties(dataUrl);
+    const imgProps =
+      pdf.getImageProperties(dataUrl);
 
-const pageWidth =
-  pdf.internal.pageSize.getWidth();
+    const pdfWidth =
+      pdf.internal.pageSize.getWidth();
 
-const imgWidth = pageWidth;
+    const pdfHeight =
+      (imgProps.height * pdfWidth)
+      / imgProps.width;
 
-const imgHeight =
-  (imgProps.height * imgWidth) /
-  imgProps.width;
+    const pageHeight =
+      pdf.internal.pageSize.getHeight();
 
-pdf.addImage(
-  dataUrl,
-  "PNG",
-  0,
-  0,
-  imgWidth,
-  imgHeight
-);
+    let heightLeft = pdfHeight;
 
-pdf.save("jornada_do_cliente.pdf");
+    let position = 0;
+
+    pdf.addImage(
+      dataUrl,
+      "PNG",
+      0,
+      position,
+      pdfWidth,
+      pdfHeight
+    );
+
+    heightLeft -= pageHeight;
+
+    while (heightLeft > 0) {
+
+      position = heightLeft - pdfHeight;
+
+      pdf.addPage();
+
+      pdf.addImage(
+        dataUrl,
+        "PNG",
+        0,
+        position,
+        pdfWidth,
+        pdfHeight
+      );
+
+      heightLeft -= pageHeight;
+    }
+
+    pdf.save("jornada_do_cliente.pdf");
+
   } catch (error) {
 
     console.log(error);
@@ -112,7 +139,6 @@ pdf.save("jornada_do_cliente.pdf");
 
   }
 }
-
   if (!dashboardData) {
 
     return (
