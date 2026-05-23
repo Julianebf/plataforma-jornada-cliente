@@ -76,59 +76,48 @@ export default function DashboardPage() {
       }
     );
 
-    const pdf = new jsPDF({
-      orientation: "landscape",
-      unit: "px",
-      format: [1600, 1000],
-    });
+   const pdf = new jsPDF({
+  orientation: "landscape",
+  unit: "px",
+  format: [1600, 1000],
+});
 
-    const imgProps =
-      pdf.getImageProperties(dataUrl);
+const imgProps =
+  pdf.getImageProperties(dataUrl);
 
-    const pdfWidth =
-      pdf.internal.pageSize.getWidth();
+const pageWidth =
+  pdf.internal.pageSize.getWidth();
 
-    const pdfHeight =
-      (imgProps.height * pdfWidth)
-      / imgProps.width;
+const pageHeight =
+  pdf.internal.pageSize.getHeight();
 
-    const pageHeight =
-      pdf.internal.pageSize.getHeight();
+const ratio = Math.min(
+  pageWidth / imgProps.width,
+  pageHeight / imgProps.height
+);
 
-    let heightLeft = pdfHeight;
+const imgWidth =
+  imgProps.width * ratio;
 
-    let position = 0;
+const imgHeight =
+  imgProps.height * ratio;
 
-    pdf.addImage(
-      dataUrl,
-      "PNG",
-      0,
-      position,
-      pdfWidth,
-      pdfHeight
-    );
+const x =
+  (pageWidth - imgWidth) / 2;
 
-    heightLeft -= pageHeight;
+const y =
+  (pageHeight - imgHeight) / 2;
 
-    while (heightLeft > 0) {
+pdf.addImage(
+  dataUrl,
+  "PNG",
+  x,
+  y,
+  imgWidth,
+  imgHeight
+);
 
-      position = heightLeft - pdfHeight;
-
-      pdf.addPage();
-
-      pdf.addImage(
-        dataUrl,
-        "PNG",
-        0,
-        position,
-        pdfWidth,
-        pdfHeight
-      );
-
-      heightLeft -= pageHeight;
-    }
-
-    pdf.save("jornada_do_cliente.pdf");
+pdf.save("jornada_do_cliente.pdf");
 
   } catch (error) {
 
