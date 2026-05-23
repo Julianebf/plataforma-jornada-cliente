@@ -79,7 +79,7 @@ export default function DashboardPage() {
 const pdf = new jsPDF({
   orientation: "landscape",
   unit: "px",
-  format: [1800, 1200],
+  format: [1400, 900],
 });
 
 const imgProps =
@@ -88,36 +88,22 @@ const imgProps =
 const pageWidth =
   pdf.internal.pageSize.getWidth();
 
-const pageHeight =
-  pdf.internal.pageSize.getHeight();
-
-const ratio = Math.min(
-  pageWidth / imgProps.width,
-  pageHeight / imgProps.height
-);
-
-const imgWidth =
-  imgProps.width * ratio;
+const imgWidth = pageWidth;
 
 const imgHeight =
-  imgProps.height * ratio;
-
-const x =
-  (pageWidth - imgWidth) / 2;
-
-const y = 0;
+  (imgProps.height * imgWidth) /
+  imgProps.width;
 
 pdf.addImage(
   dataUrl,
   "PNG",
-  x,
-  y,
+  0,
+  0,
   imgWidth,
   imgHeight
 );
 
 pdf.save("jornada_do_cliente.pdf");
-
   } catch (error) {
 
     console.log(error);
