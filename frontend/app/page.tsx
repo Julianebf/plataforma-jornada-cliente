@@ -93,14 +93,41 @@ export default function DashboardPage() {
       (imgProps.height * pdfWidth)
       / imgProps.width;
 
+    const pageHeight =
+      pdf.internal.pageSize.getHeight();
+
+    let heightLeft = pdfHeight;
+
+    let position = 0;
+
     pdf.addImage(
       dataUrl,
       "PNG",
       0,
-      0,
+      position,
       pdfWidth,
       pdfHeight
     );
+
+    heightLeft -= pageHeight;
+
+    while (heightLeft > 0) {
+
+      position = heightLeft - pdfHeight;
+
+      pdf.addPage();
+
+      pdf.addImage(
+        dataUrl,
+        "PNG",
+        0,
+        position,
+        pdfWidth,
+        pdfHeight
+      );
+
+      heightLeft -= pageHeight;
+    }
 
     pdf.save("jornada_do_cliente.pdf");
 
