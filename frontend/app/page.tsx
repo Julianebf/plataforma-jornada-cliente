@@ -351,7 +351,9 @@ export default function DashboardPage() {
               <PieChart>
 
                 <Pie
-                  data={dashboardData.pagamentos}
+                data={dashboardData.pagamentos.filter(
+                  (item: any) => item.value > 10
+                )}
                   dataKey="value"
                   nameKey="name"
                   outerRadius={90}
