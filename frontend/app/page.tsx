@@ -185,6 +185,7 @@ pdf.save("jornada_do_cliente.pdf");
       text-sm
       font-semibold
       shadow-lg
+      cursor: pointer;
     "
   >
     Exportar PDF
