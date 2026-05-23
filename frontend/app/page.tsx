@@ -79,7 +79,7 @@ export default function DashboardPage() {
 const pdf = new jsPDF({
   orientation: "landscape",
   unit: "px",
-  format: [1400, 900],
+   format: "a4",
 });
 
 const imgProps =
