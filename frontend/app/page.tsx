@@ -79,7 +79,7 @@ export default function DashboardPage() {
 const pdf = new jsPDF({
   orientation: "landscape",
   unit: "px",
-  format: [1600, 1000],
+  format: [1800, 1200],
 });
 
 const imgProps =
@@ -88,8 +88,13 @@ const imgProps =
 const pageWidth =
   pdf.internal.pageSize.getWidth();
 
-const ratio =
-  pageWidth / imgProps.width;
+const pageHeight =
+  pdf.internal.pageSize.getHeight();
+
+const ratio = Math.min(
+  pageWidth / imgProps.width,
+  pageHeight / imgProps.height
+);
 
 const imgWidth =
   imgProps.width * ratio;
@@ -97,11 +102,16 @@ const imgWidth =
 const imgHeight =
   imgProps.height * ratio;
 
+const x =
+  (pageWidth - imgWidth) / 2;
+
+const y = 0;
+
 pdf.addImage(
   dataUrl,
   "PNG",
-  0,
-  0,
+  x,
+  y,
   imgWidth,
   imgHeight
 );
