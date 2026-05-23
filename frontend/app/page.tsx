@@ -76,7 +76,7 @@ export default function DashboardPage() {
       }
     );
 
-   const pdf = new jsPDF({
+const pdf = new jsPDF({
   orientation: "landscape",
   unit: "px",
   format: [1600, 1000],
@@ -88,15 +88,8 @@ const imgProps =
 const pageWidth =
   pdf.internal.pageSize.getWidth();
 
-const pageHeight =
-  pdf.internal.pageSize.getHeight();
-
-  
-
-const ratio = Math.min(
-  pageWidth / imgProps.width,
-  pageHeight / imgProps.height
-);
+const ratio =
+  pageWidth / imgProps.width;
 
 const imgWidth =
   imgProps.width * ratio;
@@ -104,16 +97,11 @@ const imgWidth =
 const imgHeight =
   imgProps.height * ratio;
 
-const x = 0;
-
-const y =
-  (pageHeight - imgHeight) / 2;
-
 pdf.addImage(
   dataUrl,
   "PNG",
-  x,
-  y,
+  0,
+  0,
   imgWidth,
   imgHeight
 );
@@ -170,26 +158,26 @@ pdf.save("jornada_do_cliente.pdf");
     Trusted Layer
   </div>
 
-  <button
+ <button
   onClick={exportarPDF}
-    className="
-      bg-white/10
-      border
-      border-[#64dfdf]
-      hover:bg-[#64dfdf]
-      hover:text-[#071c39]
-      transition-all
-      px-4
-      py-2
-      rounded-xl
-      text-sm
-      font-semibold
-      shadow-lg
-      cursor: pointer;
-    "
-  >
-    Exportar PDF
-  </button>
+  className="
+    cursor-pointer
+    bg-white/10
+    border
+    border-[#64dfdf]
+    hover:bg-[#64dfdf]
+    hover:text-[#071c39]
+    transition-all
+    px-4
+    py-2
+    rounded-xl
+    text-sm
+    font-semibold
+    shadow-lg
+  "
+>
+  Exportar PDF
+</button>
 
 </div>
 
