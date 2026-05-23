@@ -6,6 +6,17 @@ import pandas as pd
 app = FastAPI()
 
 # =========================
+# HOME
+# =========================
+
+@app.get("/")
+def home():
+
+    return {
+        "mensagem": "API Jornada Cliente online 🚀"
+    }
+
+# =========================
 # CORS
 # =========================
 
