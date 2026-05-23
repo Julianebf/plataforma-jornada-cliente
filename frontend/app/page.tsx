@@ -91,6 +91,8 @@ const pageWidth =
 const pageHeight =
   pdf.internal.pageSize.getHeight();
 
+  
+
 const ratio = Math.min(
   pageWidth / imgProps.width,
   pageHeight / imgProps.height
@@ -102,8 +104,7 @@ const imgWidth =
 const imgHeight =
   imgProps.height * ratio;
 
-const x =
-  (pageWidth - imgWidth) / 2;
+const x = 0;
 
 const y =
   (pageHeight - imgHeight) / 2;
